@@ -19,13 +19,8 @@ app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/custommethoddb", { useNewUrlParser: true });
 
-
-
-
-
-
-
-
+// routes
+app.use(require("./routes/apiRoutes.js"));
 
 // Start the server
 app.listen(PORT, () => {
