@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 module.exports = function (app) {
 
-    db.Workouts.create({ name: "Workouts " })
+    db.Workouts.create({ name: "Workouts" })
         .then(dbWorkouts => {
             console.log(dbWorkouts)
         })
