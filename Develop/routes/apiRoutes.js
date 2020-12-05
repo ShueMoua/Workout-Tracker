@@ -1,22 +1,12 @@
 const db = require("../models");
-const mongoose = require("mongoose");
+
 
 module.exports = function (app) {
 
-    db.Workouts.create({ name: "Workouts" })
-        .then(dbWorkouts => {
-            console.log(dbWorkouts)
-        })
-        .catch(({ message }) => {
-            console.log(message);
-        });
-
-
     app.get("/api/workouts", (req, res) => {
-        db.Workouts.find({})
-            .populate("exercises")
-            .then(dbWorkouts => {
-                res.json(dbWorkouts);
+        db.Workout.find()
+            .then(dbWorkout => {
+                res.json(dbWorkout);
             })
             .catch(err => {
                 res.json(err);
@@ -25,7 +15,7 @@ module.exports = function (app) {
 
     app.put("/api/workouts/:id", ({ body }, res) => {
         db.Excerises.create(body)
-            .then(({ _id }) => db.Workouts.findOneAndUpdate({}, { $push: { exercises: _id } }, { new: true }))
+            .then(({ _id }) => db.Workout.findOneAndUpdate({}, { $push: { exercises: _id } }, { new: true }))
             .then(dbWorkouts => {
                 res.json(dbWorkouts);
             })
@@ -35,8 +25,8 @@ module.exports = function (app) {
 
     });
 
-    app.post("/api/workouts", ({ body }, res) => {
-        db.Excerises.create(body)
+    app.post("/api/workouts", (req, res) => {
+        db.Workout.create({})
             .then(dbWorkouts => {
                 res.json(dbWorkouts);
             })
@@ -46,8 +36,7 @@ module.exports = function (app) {
     });
 
     app.get("/api/workouts/range", (req, res) => {
-        db.Workouts.find({})
-            .populate("exercises")
+        db.Workout.find()
             .then(dbWorkouts => {
                 res.json(dbWorkouts);
             })
